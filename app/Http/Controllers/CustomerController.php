@@ -12,10 +12,10 @@ class CustomerController extends BaseController
 {
     public function index()
     {
-        $invoices = Customer::all();
+        $customers = Customer::all();
 
         return $this->sendResponse(
-            CustomerResource::collection($invoices),
+            CustomerResource::collection($customers),
             'Customers retrieved successfully.'
         );
     }
@@ -30,29 +30,29 @@ class CustomerController extends BaseController
             return $this->sendError('Validation Error.', $validator->errors());
         }
 
-        $invoice = Customer::create($input);
+        $customer = Customer::create($input);
 
         return $this->sendResponse(
-            new CustomerResource($invoice),
+            new CustomerResource($customer),
             'Customer created successfully.'
         );
     }
 
     public function show($id)
     {
-        $invoice = Customer::find($id);
+        $customer = Customer::find($id);
 
-        if (is_null($invoice)) {
+        if (is_null($customer)) {
             return $this->sendError('Customer not found.');
         }
 
         return $this->sendResponse(
-            new CustomerResource($invoice),
+            new CustomerResource($customer),
             'Customer retrieved successfully.'
         );
     }
 
-    public function update(UpdateCustomerRequest $request, Customer $invoice)
+    public function update(UpdateCustomerRequest $request, Customer $customer)
     {
         $input = $request->all();
 
@@ -62,17 +62,17 @@ class CustomerController extends BaseController
             return $this->sendError('Validation Error.', $validator->errors());
         }
 
-        $invoice->update($input);
+        $customer->update($input);
 
         return $this->sendResponse(
-            new CustomerResource($invoice),
+            new CustomerResource($customer),
             'Customer updated successfully.'
         );
     }
 
-    public function destroy(Customer $invoice)
+    public function destroy(Customer $customer)
     {
-        $invoice->delete();
+        $customer->delete();
 
         return $this->sendResponse([], 'Customer deleted successfully.');
     }

@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 
-class Invoice extends Model
+class Customer extends Model
 {
     use HasFactory;
 
@@ -14,13 +14,7 @@ class Invoice extends Model
 
     public $incrementing = false;
 
-    protected $fillable = [
-        'reference',
-        'customerId',
-        'items',
-        'paymentMethod',
-        'status',
-    ];
+    protected $fillable = ['id', 'name', 'address', 'tel', 'email'];
 
     public static function boot()
     {

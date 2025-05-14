@@ -1,0 +1,10 @@
+{
+    "plugins": ["@prettier/plugin-php"],
+    "tabWidth": 4,
+    "singleQuote": true,
+    "bracketSpacing": true,
+    "semi": true,
+    "arrowParens": "always",
+    "htmlWhitespaceSensitivity": "ignore",
+    "trailingComma": "none"
+}

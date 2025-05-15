@@ -9,9 +9,11 @@ return new class extends Migration {
     {
         Schema::create('invoices', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->foreignUuid('customer_id')->constrained();
+            $table
+                ->foreignUuid('customerId')
+                ->constrained(table: 'customers', indexName: 'id');
             $table->string('reference');
-            $table->string('payment_method');
+            $table->string('paymentMethod');
             $table->string('status');
             $table->json('items');
             $table->timestamps();

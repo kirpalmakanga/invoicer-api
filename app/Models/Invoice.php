@@ -22,6 +22,13 @@ class Invoice extends Model
         'status',
     ];
 
+    protected function casts(): array
+    {
+        return [
+            'items' => 'array',
+        ];
+    }
+
     public static function boot()
     {
         parent::boot();

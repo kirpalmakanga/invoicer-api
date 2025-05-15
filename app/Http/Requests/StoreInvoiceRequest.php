@@ -28,7 +28,7 @@ class StoreInvoiceRequest extends FormRequest
             'items' => 'required|array|min:1',
             'items.*.description' => 'required|string',
             'items.*.quantity' => 'required|integer|min:0',
-            'items.*.pricePerUnit' => 'required|numeric|min:0|decimal:2',
+            'items.*.pricePerUnit' => 'required|integer|min:0',
             'items.*.unit' => [
                 'required',
                 'string',

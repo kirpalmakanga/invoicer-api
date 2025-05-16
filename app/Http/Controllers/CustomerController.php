@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Validator;
 use App\Models\Customer;
 use App\Http\Requests\StoreCustomerRequest;
 use App\Http\Requests\UpdateCustomerRequest;
+use App\Http\Requests\DeleteMultipleCustomerRequest;
 use App\Http\Resources\CustomerResource;
 
 class CustomerController extends BaseController
@@ -75,5 +76,14 @@ class CustomerController extends BaseController
         $customer->delete();
 
         return $this->sendResponse([], 'Customer deleted successfully.');
+    }
+
+    public function destroyMultiple(DeleteMultipleCustomerRequest $request)
+    {
+        $ids = explode(',', $request->ids);
+
+        Customer::whereIn('id', $ids)->delete();
+
+        return $this->sendResponse([], 'Customers deleted successfully.');
     }
 }

@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Validator;
 use App\Models\Invoice;
 use App\Http\Requests\StoreInvoiceRequest;
 use App\Http\Requests\UpdateInvoiceRequest;
+use App\Http\Requests\DeleteMultipleInvoiceRequest;
 use App\Http\Resources\InvoiceResource;
 
 class InvoiceController extends BaseController
@@ -75,5 +76,14 @@ class InvoiceController extends BaseController
         $invoice->delete();
 
         return $this->sendResponse([], 'Invoice deleted successfully.');
+    }
+
+    public function destroyMultiple(DeleteMultipleInvoiceRequest $request)
+    {
+        $ids = explode(',', $request->ids);
+
+        Invoice::whereIn('id', $ids)->delete();
+
+        return $this->sendResponse([], 'Invoices deleted successfully.');
     }
 }

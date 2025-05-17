@@ -23,7 +23,6 @@ class StoreInvoiceRequest extends FormRequest
     public function rules(): array
     {
         return [
-            // 'reference' => 'required|string|unique:invoices,reference',
             'reference' => 'required|string',
             'customerId' => 'required|string|exists:customers,id',
             'items' => 'required|array|min:1',

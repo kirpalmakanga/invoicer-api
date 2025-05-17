@@ -11,7 +11,7 @@ return new class extends Migration {
             $table->uuid('id')->primary();
             $table
                 ->foreignUuid('customerId')
-                ->constrained(table: 'customers', indexName: 'id');
+                ->constrained(table: 'users', indexName: 'id');
             $table->string('reference');
             $table->string('paymentMethod');
             $table->string('status');

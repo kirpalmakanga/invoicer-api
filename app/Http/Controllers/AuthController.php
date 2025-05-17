@@ -1,4 +1,5 @@
 <?php
+namespace App\Http\Controllers;
 
 use App\Http\Controllers\BaseController;
 use Illuminate\Http\Request;
@@ -19,7 +20,7 @@ class AuthController extends BaseController
 
         $response = ['token' => $token];
 
-        return $this->sendResponse($response, 'User registered successfully.');
+        return $this->sendResponse($response, 'Token retrieved successfully.');
     }
 
     public function login()
@@ -53,15 +54,12 @@ class AuthController extends BaseController
         $user = $request->user();
 
         if ($user) {
-            return response()->json(
-                [
-                    'message' => 'User information retrieved successfully',
-                    'user' => $user,
-                ],
-                200
+            return $this->sendResponse(
+                $user,
+                'User information retrieved successfully.'
             );
         } else {
-            return response()->json(['error' => 'Unauthenticated'], 401);
+            return $this->sendError('Unauthorized.', [], 401);
         }
     }
 

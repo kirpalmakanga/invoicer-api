@@ -27,17 +27,13 @@ class AuthController extends BaseController
 
         $input['password'] = bcrypt($input['password']);
 
-        $user = User::create($input);
+        try {
+            User::create($input);
 
-        $token = $user->createToken('Invoicer');
-
-        $success = [
-            'userName' => $user->name,
-            'accessToken' => $token->accessToken,
-            // 'refreshToken' => $token->refreshToken,
-        ];
-
-        return $this->sendResponse($success, 'User register successfully.');
+            return $this->sendResponse([], 'User registered successfully.');
+        } catch (\Exception $e) {
+            return $this->sendError($e->getMessage(), [], 401);
+        }
     }
 
     public function redirect(Request $request)

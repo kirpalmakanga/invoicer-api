@@ -30,4 +30,4 @@ Copy displayed client credentials to .env file
 
     npm run serve && npm run dev
 
-Or host
+Or host it on your server of choice (nginx config included in meta folder)

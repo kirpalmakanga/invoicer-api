@@ -13,6 +13,7 @@ class InvoiceController extends BaseController
 {
     public function index()
     {
+        /** TODO: fetch by authId */
         $invoices = Invoice::all();
 
         return $this->sendResponse(
@@ -43,6 +44,7 @@ class InvoiceController extends BaseController
 
     public function show($id)
     {
+        /** TODO: fetch by auth id else 403 */
         $invoice = Invoice::find($id);
 
         if (is_null($invoice)) {
@@ -57,6 +59,7 @@ class InvoiceController extends BaseController
 
     public function update(UpdateInvoiceRequest $request, Invoice $invoice)
     {
+        /** TODO: check if userId === authId else 403 */
         $input = $request->all();
 
         $validator = Validator::make($input, $request->rules());
@@ -75,6 +78,8 @@ class InvoiceController extends BaseController
 
     public function destroy(Invoice $invoice)
     {
+        /** TODO: check if userId === authId else 403 */
+
         $invoice->delete();
 
         return $this->sendResponse([], 'Invoice deleted successfully.');
@@ -82,6 +87,7 @@ class InvoiceController extends BaseController
 
     public function destroyMultiple(DeleteMultipleInvoiceRequest $request)
     {
+        /** TODO: fetchBy authId else 403 */
         $ids = explode(',', $request->ids);
 
         Invoice::whereIn('id', $ids)->delete();

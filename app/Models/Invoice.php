@@ -20,6 +20,7 @@ class Invoice extends Model
         'items',
         'paymentMethod',
         'status',
+        'datePaid',
     ];
 
     protected function casts(): array

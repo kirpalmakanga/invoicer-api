@@ -12,10 +12,14 @@ return new class extends Migration {
             $table
                 ->foreignUuid('customerId')
                 ->constrained(table: 'customers', indexName: 'id');
+            $table
+                ->foreignUuid('userId')
+                ->constrained(table: 'users', indexName: 'id');
             $table->string('reference');
             $table->string('paymentMethod');
             $table->string('status');
             $table->json('items');
+            $table->date('datePaid');
             $table->timestamps();
         });
     }

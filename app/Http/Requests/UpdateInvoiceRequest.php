@@ -45,6 +45,7 @@ class UpdateInvoiceRequest extends FormRequest
                 'string',
                 Rule::in(['pending', 'unpaid', 'paid']),
             ],
+            'datePaid' => 'nullable|date',
         ];
     }
 }

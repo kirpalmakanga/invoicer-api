@@ -44,6 +44,7 @@ class StoreInvoiceRequest extends FormRequest
                 'string',
                 Rule::in(['pending', 'unpaid', 'paid']),
             ],
+            'datePaid' => 'nullable|date',
         ];
     }
 }

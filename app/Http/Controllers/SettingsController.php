@@ -22,8 +22,6 @@ class SettingsController extends BaseController
 
     public function set(UpdateSettingsRequest $request)
     {
-        $userId = auth('api')->user()->id;
-
         $input = $request->all();
 
         $validator = Validator::make($input, $request->rules());
@@ -32,7 +30,7 @@ class SettingsController extends BaseController
             return $this->sendError('Validation Error.', $validator->errors());
         }
 
-        $settings = Settings::where('userId', $userId)->first();
+        $settings = Settings::where('userId', auth('api')->user()->id)->first();
 
         if ($settings) {
             $settings->update($input);

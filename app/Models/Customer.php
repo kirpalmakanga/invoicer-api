@@ -22,6 +22,7 @@ class Customer extends Model
 
         static::creating(function ($model) {
             $model->id = Str::uuid();
+            $model->userId = auth('api')->user()->id;
         });
     }
 }

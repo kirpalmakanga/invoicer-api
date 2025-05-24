@@ -31,8 +31,6 @@ class InvoiceController extends BaseController
             return $this->sendError('Validation Error.', $validator->errors());
         }
 
-        $input['userId'] = auth('api')->user()->id;
-
         $invoice = Invoice::create($input);
 
         return $this->sendResponse(

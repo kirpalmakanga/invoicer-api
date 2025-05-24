@@ -25,7 +25,7 @@ class Settings extends Model
         parent::boot();
 
         static::creating(function ($model) {
-            $model->userId = Auth::id();
+            $model->userId = auth('api')->user()->id;
         });
     }
 }

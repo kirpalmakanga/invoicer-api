@@ -31,8 +31,6 @@ class CustomerController extends BaseController
             return $this->sendError('Validation Error.', $validator->errors());
         }
 
-        $input['userId'] = auth('api')->user()->id;
-
         $customer = Customer::create($input);
 
         return $this->sendResponse(

@@ -45,7 +45,7 @@ class CustomerController extends BaseController
     {
         $customer = Customer::where('id', $id)
             ->where('userId', auth('api')->user()->id)
-            ->get();
+            ->first();
 
         if (is_null($customer)) {
             return $this->sendError('Customer not found.');

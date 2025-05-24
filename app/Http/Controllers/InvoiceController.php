@@ -45,7 +45,7 @@ class InvoiceController extends BaseController
     {
         $invoice = Invoice::where('id', $id)
             ->where('userId', auth('api')->user()->id)
-            ->get();
+            ->first();
 
         if (is_null($invoice)) {
             return $this->sendError('Invoice not found.');

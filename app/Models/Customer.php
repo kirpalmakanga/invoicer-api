@@ -14,7 +14,7 @@ class Customer extends Model
 
     public $incrementing = false;
 
-    protected $fillable = ['id', 'name', 'address', 'tel', 'email'];
+    protected $fillable = ['id', 'name', 'address', 'tel', 'email', 'userId'];
 
     public static function boot()
     {

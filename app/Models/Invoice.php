@@ -21,6 +21,7 @@ class Invoice extends Model
         'paymentMethod',
         'status',
         'datePaid',
+        'userId',
     ];
 
     protected function casts(): array

@@ -13,8 +13,7 @@ class InvoiceController extends BaseController
 {
     public function index()
     {
-        /** TODO: fetch by authId */
-        $invoices = Invoice::all();
+        $invoices = Invoice::where('userId', auth('api')->user()->id)->get();
 
         return $this->sendResponse(
             InvoiceResource::collection($invoices),
@@ -44,8 +43,9 @@ class InvoiceController extends BaseController
 
     public function show($id)
     {
-        /** TODO: fetch by auth id else 403 */
-        $invoice = Invoice::find($id);
+        $invoice = Invoice::where('id', $id)
+            ->where('userId', auth('api')->user()->id)
+            ->get();
 
         if (is_null($invoice)) {
             return $this->sendError('Invoice not found.');
@@ -59,7 +59,10 @@ class InvoiceController extends BaseController
 
     public function update(UpdateInvoiceRequest $request, Invoice $invoice)
     {
-        /** TODO: check if userId === authId else 403 */
+        if ($invoice->userId !== auth('api')->user()->id) {
+            return $this->sendError('Forbidden.', 403);
+        }
+
         $input = $request->all();
 
         $validator = Validator::make($input, $request->rules());
@@ -78,7 +81,9 @@ class InvoiceController extends BaseController
 
     public function destroy(Invoice $invoice)
     {
-        /** TODO: check if userId === authId else 403 */
+        if ($invoice->userId !== auth('api')->user()->id) {
+            return $this->sendError('Forbidden.', 403);
+        }
 
         $invoice->delete();
 
@@ -90,7 +95,9 @@ class InvoiceController extends BaseController
         /** TODO: fetchBy authId else 403 */
         $ids = explode(',', $request->ids);
 
-        Invoice::whereIn('id', $ids)->delete();
+        Invoice::whereIn('id', $ids)
+            ->where('userId', auth('api')->user()->id)
+            ->delete();
 
         return $this->sendResponse([], 'Invoices deleted successfully.');
     }

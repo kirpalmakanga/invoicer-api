@@ -13,7 +13,7 @@ class CustomerController extends BaseController
 {
     public function index()
     {
-        $customers = Customer::all();
+        $customers = Customer::where('userId', auth('api')->user()->id)->get();
 
         return $this->sendResponse(
             CustomerResource::collection($customers),
@@ -31,6 +31,8 @@ class CustomerController extends BaseController
             return $this->sendError('Validation Error.', $validator->errors());
         }
 
+        $input['userId'] = auth('api')->user()->id;
+
         $customer = Customer::create($input);
 
         return $this->sendResponse(
@@ -41,7 +43,9 @@ class CustomerController extends BaseController
 
     public function show($id)
     {
-        $customer = Customer::find($id);
+        $customer = Customer::where('id', $id)
+            ->where('userId', auth('api')->user()->id)
+            ->get();
 
         if (is_null($customer)) {
             return $this->sendError('Customer not found.');
@@ -55,6 +59,10 @@ class CustomerController extends BaseController
 
     public function update(UpdateCustomerRequest $request, Customer $customer)
     {
+        if ($customer->userId !== auth('api')->user()->id) {
+            return $this->sendError('Forbidden.', 403);
+        }
+
         $input = $request->all();
 
         $validator = Validator::make($input, $request->rules());
@@ -73,6 +81,10 @@ class CustomerController extends BaseController
 
     public function destroy(Customer $customer)
     {
+        if ($customer->userId !== auth('api')->user()->id) {
+            return $this->sendError('Forbidden.', 403);
+        }
+
         $customer->delete();
 
         return $this->sendResponse([], 'Customer deleted successfully.');
@@ -82,7 +94,9 @@ class CustomerController extends BaseController
     {
         $ids = explode(',', $request->ids);
 
-        Customer::whereIn('id', $ids)->delete();
+        Customer::whereIn('id', $ids)
+            ->where('userId', auth('api')->user()->id)
+            ->delete();
 
         return $this->sendResponse([], 'Customers deleted successfully.');
     }

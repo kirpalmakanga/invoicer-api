@@ -13,7 +13,9 @@ class CustomerController extends BaseController
 {
     public function index()
     {
-        $customers = Customer::where('userId', auth('api')->user()->id)->get();
+        $customers = Customer::where('userId', auth('api')->user()->id)
+            ->get()
+            ->sortByDesc('name');
 
         return $this->sendResponse(
             CustomerResource::collection($customers),

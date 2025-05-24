@@ -13,7 +13,9 @@ class InvoiceController extends BaseController
 {
     public function index()
     {
-        $invoices = Invoice::where('userId', auth('api')->user()->id)->get();
+        $invoices = Invoice::where('userId', auth('api')->user()->id)
+            ->get()
+            ->sortByDesc('created_at');
 
         return $this->sendResponse(
             InvoiceResource::collection($invoices),

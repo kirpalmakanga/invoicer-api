@@ -19,7 +19,7 @@ return new class extends Migration {
             $table->string('paymentMethod');
             $table->string('status');
             $table->json('items');
-            $table->date('datePaid');
+            $table->date('datePaid')->nullable();
             $table->timestamps();
         });
     }

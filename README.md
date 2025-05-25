@@ -28,6 +28,4 @@ Copy displayed client credentials to .env file
 
 ### Run
 
-    npm run serve && npm run dev
-
-Or host it on your server of choice (nginx config included in meta folder)
+Host it on your server of choice (artisan serve won't work because of nested http requests)
